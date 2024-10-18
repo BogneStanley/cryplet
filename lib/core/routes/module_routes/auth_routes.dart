@@ -1,6 +1,6 @@
 part of '../app_routes.dart';
 
-class _AuthRoutes extends _ModuleRoutesContract {
+class _AuthRoutes extends ModuleRoutesContract {
   const _AuthRoutes();
 
   static const String _login = '/login';
@@ -13,13 +13,9 @@ class _AuthRoutes extends _ModuleRoutesContract {
   Route<dynamic>? getRoutes(RouteSettings settings) {
     switch (settings.name) {
       case _login:
-        return MaterialPageRoute(
-          builder: (context) => const Scaffold(),
-        );
+        return buildRoute(const LoginScreen());
       case _register:
-        return MaterialPageRoute(
-          builder: (context) => const Scaffold(),
-        );
+        return buildRoute(const RegisterScreen());
       default:
         return null;
     }

@@ -1,6 +1,6 @@
 part of '../app_routes.dart';
 
-class _SplashScreenRoutes extends _ModuleRoutesContract {
+class _SplashScreenRoutes extends ModuleRoutesContract {
   const _SplashScreenRoutes();
 
   static const String _splashScreen = '/splashScreen';
