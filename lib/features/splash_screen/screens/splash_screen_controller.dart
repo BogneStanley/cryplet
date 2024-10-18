@@ -8,6 +8,7 @@ class _SplashScreenController {
   Future<void> init() async {}
 
   void goToLoginScreen() {
+    print(AppConfig.appBaseUrl);
     Navigator.pushNamed(_context, AppRoutes.authRoutes.login);
   }
 }

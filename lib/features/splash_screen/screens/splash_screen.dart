@@ -1,4 +1,5 @@
 import 'package:cryplet/core/routes/app_routes.dart';
+import 'package:cryplet/shared/constants/app_config.dart';
 import 'package:flutter/material.dart';
 
 part 'splash_screen_controller.dart';

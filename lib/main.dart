@@ -1,13 +1,16 @@
 import 'package:cryplet/core/routes/app_routes.dart';
+import 'package:cryplet/core/services/app_storage_service.dart';
+import 'package:cryplet/core/services/dependancies_injection_container.dart';
+import 'package:cryplet/shared/constants/app_colors.dart';
+import 'package:cryplet/shared/constants/app_config.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:dotenv/dotenv.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  var env = DotEnv()..load();
-  env.getOrElse(
-    'API_KEY',
-    () => 'API_KEY',
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DependanciesInjectionContainer.init();
+  await AppStorageService.init();
   runApp(const MyApp());
 }
 
@@ -16,14 +19,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<AuthCubit>(),
+        ),
+      ],
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            title: AppConfig.appName,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+              useMaterial3: true,
+            ),
+            initialRoute: AppRoutes.splashScreenRoutes.splashScreen,
+            onGenerateRoute: AppRoutes.generateRoute,
+          );
+        },
       ),
-      initialRoute: AppRoutes.splashScreenRoutes.splashScreen,
-      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }

@@ -4,11 +4,14 @@ import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/forms/app_form_control.dart';
 import 'package:cryplet/core/utils/forms/app_form_validator.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:cryplet/shared/widgets/app_buttons/app_button.dart';
 import 'package:cryplet/shared/widgets/app_text/app_title.dart';
+import 'package:cryplet/shared/widgets/dialogs/app_message_dialog.dart';
 import 'package:cryplet/shared/widgets/text_field/app_password_field.dart';
 import 'package:cryplet/shared/widgets/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'login_controller.dart';
 
@@ -69,7 +72,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 40.ph,
-                AppButton(label: 'Login', onPressed: () {}),
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    return AppButton(
+                      label: 'Login',
+                      onPressed: ctrl.login,
+                      isLoading: state.loginInProgess,
+                    );
+                  },
+                ),
                 10.ph,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),

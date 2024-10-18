@@ -1,14 +1,20 @@
+import 'dart:io';
+
 import 'package:cryplet/core/contracts/screen_controller_contract.dart';
 import 'package:cryplet/core/extentions/number_extension.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/forms/app_form_control.dart';
 import 'package:cryplet/core/utils/forms/app_form_validator.dart';
+import 'package:cryplet/core/utils/image_handler.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:cryplet/shared/widgets/app_buttons/app_button.dart';
 import 'package:cryplet/shared/widgets/app_text/app_title.dart';
+import 'package:cryplet/shared/widgets/dialogs/app_message_dialog.dart';
 import 'package:cryplet/shared/widgets/text_field/app_password_field.dart';
 import 'package:cryplet/shared/widgets/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'register_controller.dart';
 
@@ -25,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    _ctrl = _RegisterController(context);
+    _ctrl = _RegisterController(context, setState);
   }
 
   @override
@@ -46,11 +52,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 40.ph,
-                const FlutterLogo(size: 80),
-                40.ph,
-                const AppTitle('Create Account').title1(),
-                40.ph,
+                const AppTitle('Create Account').title2(),
+                20.ph,
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: _ctrl.avatar == null
+                          ? null
+                          : FileImage(_ctrl.avatar!),
+                      radius: 60,
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: IconButton(
+                        onPressed: _ctrl.pickAvatar,
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            Colors.white,
+                          ),
+                          foregroundColor: WidgetStateProperty.all(
+                            AppColors.primary,
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.add_a_photo,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                20.ph,
                 Form(
+                  key: _ctrl.formGroup.formKey,
                   child: ListBody(
                     children: [
                       AppTextField(
@@ -80,7 +115,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 40.ph,
-                AppButton(label: 'Create Account', onPressed: () {}),
+                AppButton(
+                  label: 'Create Account',
+                  onPressed: _ctrl.register,
+                  isLoading: _ctrl.authState.registerInProgess,
+                ),
                 10.ph,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),

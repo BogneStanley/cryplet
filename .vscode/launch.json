@@ -7,6 +7,7 @@
             "noDebug": true,
             "args": [
                 "--verbose",
+                "--dart-define-from-file=.env"
             ],
             "program": "lib/main.dart"
         }

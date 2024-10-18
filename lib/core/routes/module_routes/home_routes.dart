@@ -5,7 +5,7 @@ class _HomeRoutes extends ModuleRoutesContract {
 
   static const String _home = '/home';
 
-  static String get home => _home;
+  String get home => _home;
 
   @override
   Route<dynamic>? getRoutes(RouteSettings settings) {
