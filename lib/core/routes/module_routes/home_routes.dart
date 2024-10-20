@@ -11,8 +11,9 @@ class _HomeRoutes extends ModuleRoutesContract {
   Route<dynamic>? getRoutes(RouteSettings settings) {
     switch (settings.name) {
       case _home:
-        return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+        return buildRoute(
+          const HomeScreen(),
+          guard: AuthGuard(),
         );
       default:
         return null;

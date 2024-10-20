@@ -28,10 +28,14 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           validator: validator,
           autovalidateMode: AutovalidateMode.onUnfocus,
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             label: label == null
                 ? null
-                : Text(label!, style: GoogleFonts.poppins()),
+                : Text(
+                    label!,
+                    style: GoogleFonts.poppins(),
+                  ),
             border: InputBorder.none,
           ),
         ),

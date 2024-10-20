@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   dio: ^5.7.0
+  fl_chart: ^0.69.0
   flutter_dotenv: ^5.2.1
   floor: ^1.5.0
   flutter_bloc: ^8.1.6
