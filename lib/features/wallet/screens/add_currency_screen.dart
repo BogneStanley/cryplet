@@ -17,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
-part 'controller/add_currency_screen_controller.dart';
+part 'controllers/add_currency_screen_controller.dart';
 
 class AddCurrencyScreen extends StatefulWidget {
   const AddCurrencyScreen({super.key, required this.id});

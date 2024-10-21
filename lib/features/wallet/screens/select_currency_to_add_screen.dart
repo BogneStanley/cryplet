@@ -12,7 +12,7 @@ import 'package:cryplet/shared/widgets/app_text/app_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'controller/select_currency_to_add_controller.dart';
+part 'controllers/select_currency_to_add_controller.dart';
 
 class SelectCurrencyToAddScreen extends StatelessWidget {
   const SelectCurrencyToAddScreen({super.key});
