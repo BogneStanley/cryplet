@@ -24,3 +24,8 @@ Dans le fichier **.env** definir les variables suivantes
 
 - CRYPTO_API_KEY="your-coingecke-api-key"
 - CRYPTO_API_URL= "https://api.coingecko.com/api/v3"
+
+
+### Démarrer l'application
+
+`flutter run --dart-define-from-file=.env`
