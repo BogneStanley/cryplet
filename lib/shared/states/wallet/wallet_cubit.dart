@@ -40,21 +40,24 @@ class WalletCubit extends Cubit<WalletState> {
     });
   }
 
-  void removeCrypto(CryptoCurrencyModel crypto) async {
+  Future<bool> removeCrypto(CryptoCurrencyModel crypto) async {
     final wallet = state.walletCrypto;
     wallet.removeWhere((e) => e.id == crypto.id);
     emit(state.copyWith(isLoading: true));
     var res = await _cryptoRepository.saveLocalCryptoWallet(wallet);
 
-    res.fold((l) {
+    return res.fold((l) {
       emit(state.copyWith(errorMessage: l.message, isLoading: false));
+      return false;
     }, (r) {
       emit(state.copyWith(
           walletCrypto: wallet, isLoading: false, errorMessage: null));
+
+      return true;
     });
   }
 
-  void updateCrypto(CryptoCurrencyModel crypto) async {
+  Future<bool> updateCrypto(CryptoCurrencyModel crypto) async {
     final wallet = state.walletCrypto;
     var newWallet = wallet.map((e) {
       if (e.id == crypto.id) {
@@ -65,11 +68,13 @@ class WalletCubit extends Cubit<WalletState> {
     emit(state.copyWith(isLoading: true));
     var res = await _cryptoRepository.saveLocalCryptoWallet(newWallet);
 
-    res.fold((l) {
+    return res.fold((l) {
       emit(state.copyWith(errorMessage: l.message, isLoading: false));
+      return false;
     }, (r) {
       emit(state.copyWith(
           walletCrypto: newWallet, isLoading: false, errorMessage: null));
+      return true;
     });
   }
 
@@ -79,5 +84,9 @@ class WalletCubit extends Cubit<WalletState> {
       (l) => null,
       (r) => r,
     );
+  }
+
+  void toggleHideAmount() {
+    emit(state.copyWith(hideAmount: !state.hideAmount));
   }
 }

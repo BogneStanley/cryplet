@@ -9,9 +9,13 @@ class UserBallanceCard extends StatelessWidget {
   const UserBallanceCard({
     super.key,
     required this.balance,
+    this.hideAmount = false,
+    this.onHideTap,
   });
 
   final String balance;
+  final bool hideAmount;
+  final void Function()? onHideTap;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +44,9 @@ class UserBallanceCard extends StatelessWidget {
                       const CircleBorder(),
                     ),
                   ),
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.visibility_off,
+                  onPressed: onHideTap,
+                  icon: Icon(
+                    hideAmount ? Icons.visibility : Icons.visibility_off,
                   ),
                 ),
               ],
@@ -59,7 +63,7 @@ class UserBallanceCard extends StatelessWidget {
                 10.pw,
                 Expanded(
                   child: Text(
-                    '$balance USD',
+                    hideAmount ? '**** USD' : '$balance USD',
                     style: GoogleFonts.poppins(
                       fontSize: 38,
                       fontWeight: FontWeight.w900,

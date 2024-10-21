@@ -2,7 +2,9 @@ import 'package:cryplet/core/contracts/screen_controller_contract.dart';
 import 'package:cryplet/core/extentions/number_extension.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/tools.dart';
+import 'package:cryplet/shared/data/auth/models/user_model.dart';
 import 'package:cryplet/shared/data/crypto/models/crypto_currency_model.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:cryplet/shared/states/wallet/wallet_cubit.dart';
 import 'package:cryplet/shared/widgets/app_buttons/app_icon_button.dart';
 import 'package:cryplet/shared/widgets/card/user_ballance_card.dart';
@@ -28,9 +30,9 @@ class WalletScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const UserAppBar(
-              userName: 'Stanley Brown',
-              userAvatar: '',
+            UserAppBar(
+              userName: ctrl.user?.username ?? '',
+              userAvatar: ctrl.user?.avatarUrl ?? '',
             ),
             Expanded(
               child: ListView(
@@ -38,6 +40,8 @@ class WalletScreen extends StatelessWidget {
                 children: [
                   UserBallanceCard(
                     balance: ctrl.walletState.totalBalance.to2Decimal,
+                    hideAmount: ctrl.walletState.hideAmount,
+                    onHideTap: ctrl.hideAmount,
                   ),
                   40.ph,
                   Row(
@@ -65,8 +69,9 @@ class WalletScreen extends StatelessWidget {
                       cryproSymbol: e.symbol ?? '',
                       cryproIcon: e.image ?? '',
                       numberOfCoin: e.myBalance ?? 0,
-                      cryproChangeRate: 16500.0,
+                      cryproChangeRate: e.currentPrice ?? 0,
                       isFavorite: e.isFavorite ?? false,
+                      hideAmount: ctrl.walletState.hideAmount,
                       toggleFavorite: () => ctrl.addCurrencyToFavorite(e),
                       onPressed: () => ctrl.goToCurrencyDetails(e.id!),
                     );

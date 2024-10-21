@@ -1,14 +1,15 @@
+import 'package:cryplet/core/contracts/screen_controller_contract.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/services/app_storage_service.dart';
-import 'package:cryplet/core/services/dependancies_injection_container.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
 import 'package:cryplet/shared/constants/app_config.dart';
 import 'package:cryplet/shared/data/auth/models/user_model.dart';
-import 'package:cryplet/shared/data/auth/repositories/auth_repository.dart';
 import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:cryplet/shared/widgets/app_buttons/app_icon_button.dart';
 import 'package:cryplet/shared/widgets/app_text/app_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 part 'splash_screen_controller.dart';
 

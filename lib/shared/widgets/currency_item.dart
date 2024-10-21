@@ -15,6 +15,7 @@ class CurrencyItem extends StatelessWidget {
     required this.cryproChangeRate,
     this.isFavorite = false,
     this.showFavoriteAction = true,
+    this.hideAmount = false,
     this.toggleFavorite,
     this.onPressed,
   });
@@ -26,6 +27,7 @@ class CurrencyItem extends StatelessWidget {
   final double numberOfCoin;
   final double cryproChangeRate;
   final bool isFavorite;
+  final bool hideAmount;
   final bool showFavoriteAction;
   final void Function()? toggleFavorite;
   final void Function()? onPressed;
@@ -94,10 +96,12 @@ class CurrencyItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   AppTitle(
-                    (numberOfCoin).toStringAsFixed(2),
+                    hideAmount ? '****' : (numberOfCoin).toStringAsFixed(2),
                   ).title2(),
                   AppTitle(
-                    '${(numberOfCoin * cryproChangeRate).toStringAsFixed(2)} USD',
+                    hideAmount
+                        ? '**** USD'
+                        : '${(numberOfCoin * cryproChangeRate).to2Decimal} USD',
                   ).title5(),
                 ],
               ),

@@ -22,4 +22,8 @@ abstract class Tools {
     print(code);
     return int.parse(code);
   }
+
+  static bool priceIsMore(double a, double b) {
+    return a > b;
+  }
 }

@@ -3,7 +3,8 @@ import 'package:cryplet/core/extentions/number_extension.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/tools.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
-import 'package:cryplet/shared/data/crypto/models/crypto_currency_model.dart';
+import 'package:cryplet/shared/data/auth/models/user_model.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:cryplet/shared/states/wallet/wallet_cubit.dart';
 import 'package:cryplet/shared/widgets/app_bar/app_bottom_nav_bar.dart';
 import 'package:cryplet/shared/widgets/app_bar/user_app_bar.dart';
@@ -31,9 +32,9 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const UserAppBar(
-              userName: 'Stanley Brown',
-              userAvatar: '',
+            UserAppBar(
+              userName: ctrl.user?.username ?? '',
+              userAvatar: ctrl.user?.avatarUrl ?? '',
             ),
             Expanded(
               child: ListView(
@@ -41,6 +42,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   UserBallanceCard(
                     balance: ctrl.walletState.totalBalance.to2Decimal,
+                    hideAmount: ctrl.walletState.hideAmount,
+                    onHideTap: ctrl.hideAmount,
                   ),
                   30.ph,
                   Container(
@@ -104,7 +107,8 @@ class HomeScreen extends StatelessWidget {
                               cryproChangeRate: e.currentPrice ?? 0,
                               cryproIcon: e.image ?? '',
                               cryproSymbol: e.symbol ?? '',
-                              onPressed: null,
+                              hideAmount: ctrl.walletState.hideAmount,
+                              onPressed: () => ctrl.goToCurrencyDetails(e.id!),
                             );
                           })
                         ],

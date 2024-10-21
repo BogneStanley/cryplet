@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTitle {
-  const AppTitle(this.data, {this.fontSize, this.color, this.fontWeight});
+  const AppTitle(this.data,
+      {this.fontSize, this.color, this.fontWeight, this.textAllign});
   final String data;
   final double? fontSize;
   final Color? color;
   final FontWeight? fontWeight;
+  final TextAlign? textAllign;
 
   Widget title1() {
     return _title(30);
@@ -32,6 +34,7 @@ class AppTitle {
   Widget _title(double fontSize) {
     return Text(
       data,
+      textAlign: textAllign,
       style: GoogleFonts.poppins(
         fontSize: this.fontSize ?? fontSize,
         fontWeight: fontWeight ?? FontWeight.w600,

@@ -5,6 +5,7 @@ class _WalletScreenController extends ScreenControllerContract {
 
   WalletState get walletState => context.watch<WalletCubit>().state;
   WalletCubit get walletCubit => context.read<WalletCubit>();
+  UserModel? get user => context.read<AuthCubit>().state.user;
 
   void goToCurrencyDetails(String id) {
     Navigator.pushNamed(
@@ -12,6 +13,10 @@ class _WalletScreenController extends ScreenControllerContract {
       AppRoutes.walletRoutes.currencyDetails,
       arguments: id,
     );
+  }
+
+  void hideAmount() {
+    walletCubit.toggleHideAmount();
   }
 
   void addCurrencyToFavorite(CryptoCurrencyModel currency) {

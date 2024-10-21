@@ -1,7 +1,7 @@
-import 'package:cryplet/core/services/app_storage_service.dart';
 import 'package:cryplet/features/auth/screens/login/login_screen.dart';
-import 'package:cryplet/shared/data/auth/models/user_model.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../contracts/guard_contract.dart';
 
@@ -13,12 +13,7 @@ class AuthGuard extends GuardContract {
     if (context == null) {
       return false;
     }
-    String? token = AppStorageService.getToken();
-    UserModel? user = AppStorageService.getUser();
 
-    if (token == null || token.isEmpty || user == null) {
-      return false;
-    }
-    return true;
+    return context.read<AuthCubit>().state.isAuth;
   }
 }

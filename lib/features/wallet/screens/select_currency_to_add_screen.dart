@@ -35,16 +35,16 @@ class SelectCurrencyToAddScreen extends StatelessWidget {
                 onRetry: () => ctrl.reloadCurrencies(),
               ),
             )
-          else if (ctrl.currencies.isEmpty)
-            const Expanded(
-              child: LoadErroMessagesWidget(
-                message: 'No Currencies Found',
-              ),
-            )
           else if (ctrl.state.isLoading)
             const Expanded(
               child: Center(
                 child: CircularProgressIndicator(),
+              ),
+            )
+          else if (ctrl.currencies.isEmpty)
+            const Expanded(
+              child: LoadErroMessagesWidget(
+                message: 'No Currencies Found',
               ),
             )
           else

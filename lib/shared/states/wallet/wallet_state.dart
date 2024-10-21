@@ -4,18 +4,26 @@ class WalletState {
   List<CryptoCurrencyModel> walletCrypto;
   final bool isLoading;
   final String? errorMessage;
+  final bool hideAmount;
 
-  WalletState(
-      {required this.walletCrypto, this.isLoading = false, this.errorMessage});
+  WalletState({
+    required this.walletCrypto,
+    this.isLoading = false,
+    this.errorMessage,
+    this.hideAmount = false,
+  });
 
-  WalletState copyWith(
-      {List<CryptoCurrencyModel>? walletCrypto,
-      bool? isLoading,
-      String? errorMessage}) {
+  WalletState copyWith({
+    List<CryptoCurrencyModel>? walletCrypto,
+    bool? isLoading,
+    String? errorMessage,
+    bool? hideAmount,
+  }) {
     return WalletState(
       walletCrypto: walletCrypto ?? this.walletCrypto,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
+      hideAmount: hideAmount ?? this.hideAmount,
     );
   }
 

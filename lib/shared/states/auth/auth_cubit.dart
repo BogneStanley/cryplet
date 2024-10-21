@@ -90,6 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
       ));
       return l.message;
     }, (r) {
+      print(r);
       emit(state.copyWith(
         gettingUserInProgess: false,
         user: r,
@@ -98,5 +99,17 @@ class AuthCubit extends Cubit<AuthState> {
       _authRepository.saveUser(r);
       return null;
     });
+  }
+
+  void enableOfflineMode() {
+    emit(state.copyWith(isOfflineMode: true));
+  }
+
+  void disableOfflineMode() {
+    emit(state.copyWith(isOfflineMode: false));
+  }
+
+  void setUser(UserModel user) {
+    emit(state.copyWith(user: user));
   }
 }

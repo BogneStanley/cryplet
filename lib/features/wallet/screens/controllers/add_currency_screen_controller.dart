@@ -41,10 +41,6 @@ class _AddCurrencyScreenController extends ScreenControllerContract {
       .currenciesList
       .firstWhere((element) => element.id == id);
 
-  bool priceIsMore(HistoryDataItemModel a, HistoryDataItemModel b) {
-    return a.price > b.price;
-  }
-
   void addCurrencyToWallet() async {
     if (!formGroup.formKey.currentState!.validate()) {
       return;

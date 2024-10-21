@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cryplet/shared/constants/app_config.dart';
+
 class UserModel {
   final String? id;
   final String? collectionId;
@@ -26,6 +28,13 @@ class UserModel {
     this.name,
     this.avatar,
   });
+
+  String? get avatarUrl {
+    if (avatar == null) {
+      return null;
+    }
+    return '${AppConfig.appBaseUrl}/api/files/${collectionId!}/${id!}/${avatar!}';
+  }
 
   UserModel copyWith({
     String? id,

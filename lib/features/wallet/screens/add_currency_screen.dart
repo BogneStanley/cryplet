@@ -3,7 +3,9 @@ import 'package:cryplet/core/extentions/number_extension.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/forms/app_form_control.dart';
 import 'package:cryplet/core/utils/forms/app_form_validator.dart';
+import 'package:cryplet/core/utils/tools.dart';
 import 'package:cryplet/features/wallet/screens/state/get_currencies_list_cubit/get_currencies_list_cubit.dart';
+import 'package:cryplet/features/wallet/screens/widgets/variation_item.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
 import 'package:cryplet/shared/data/crypto/models/crypto_currency_model.dart';
 import 'package:cryplet/shared/data/crypto/models/history_data_item_model.dart';
@@ -14,8 +16,6 @@ import 'package:cryplet/shared/widgets/text_field/app_text_field.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:smooth_corner/smooth_corner.dart';
 
 part 'controllers/add_currency_screen_controller.dart';
 
@@ -135,8 +135,8 @@ class _AddCurrencyScreenState extends State<AddCurrencyScreen> {
                                       show: true,
                                       gradient: LinearGradient(
                                         colors: [
-                                          AppColors.primary.withOpacity(0.5),
-                                          AppColors.orange.withOpacity(0.4),
+                                          AppColors.primary.withOpacity(0.2),
+                                          AppColors.orange.withOpacity(0.1),
                                         ],
                                       ),
                                     ),
@@ -170,7 +170,7 @@ class _AddCurrencyScreenState extends State<AddCurrencyScreen> {
                           const CircleBorder(),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: _ctrl.getHistory,
                       icon: const Icon(
                         Icons.refresh,
                       ),
@@ -187,10 +187,11 @@ class _AddCurrencyScreenState extends State<AddCurrencyScreen> {
                         child: VariationItem(
                           isUp: entrie.key == 0
                               ? null
-                              : _ctrl.priceIsMore(
-                                  _ctrl.history[entrie.key - 1], entrie.value),
+                              : Tools.priceIsMore(
+                                  _ctrl.history[entrie.key - 1].price,
+                                  entrie.value.price),
                           time: entrie.value.timeFormatted,
-                          price: entrie.value.price.toString(),
+                          price: entrie.value.price.to2Decimal,
                         ),
                       ),
                     )
@@ -233,75 +234,6 @@ class _AddCurrencyScreenState extends State<AddCurrencyScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-}
-
-class VariationItem extends StatelessWidget {
-  const VariationItem({
-    super.key,
-    this.isUp,
-    required this.time,
-    required this.price,
-  });
-
-  final bool? isUp;
-  final String time;
-  final String price;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 2),
-      child: SmoothCard(
-        borderRadius: BorderRadius.circular(15.0),
-        color: isUp == null
-            ? AppColors.grey.withOpacity(0.3)
-            : !isUp!
-                ? AppColors.red.withOpacity(0.1)
-                : AppColors.green.withOpacity(0.1),
-        elevation: 0,
-        smoothness: 1.0,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            children: [
-              Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.poppins(
-                      color: AppColors.dark,
-                      fontSize: 16,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: '$time:',
-                      ),
-                      TextSpan(
-                        text: ' $price USD',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              10.pw,
-              if (isUp == true)
-                const Icon(
-                  Icons.keyboard_double_arrow_up,
-                  color: AppColors.green,
-                ),
-              if (isUp == false)
-                const Icon(
-                  Icons.keyboard_double_arrow_down,
-                  color: AppColors.red,
-                ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
