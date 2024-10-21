@@ -8,7 +8,10 @@ import 'package:smooth_corner/smooth_corner.dart';
 class UserBallanceCard extends StatelessWidget {
   const UserBallanceCard({
     super.key,
+    required this.balance,
   });
+
+  final String balance;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class UserBallanceCard extends StatelessWidget {
                 10.pw,
                 Expanded(
                   child: Text(
-                    '1 000,00 USD',
+                    '$balance USD',
                     style: GoogleFonts.poppins(
                       fontSize: 38,
                       fontWeight: FontWeight.w900,

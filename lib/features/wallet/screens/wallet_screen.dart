@@ -2,6 +2,8 @@ import 'package:cryplet/core/contracts/screen_controller_contract.dart';
 import 'package:cryplet/core/extentions/number_extension.dart';
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/utils/tools.dart';
+import 'package:cryplet/shared/data/crypto/models/crypto_currency_model.dart';
+import 'package:cryplet/shared/states/wallet/wallet_cubit.dart';
 import 'package:cryplet/shared/widgets/app_buttons/app_icon_button.dart';
 import 'package:cryplet/shared/widgets/card/user_ballance_card.dart';
 import 'package:cryplet/shared/widgets/currency_item.dart';
@@ -10,8 +12,9 @@ import 'package:cryplet/shared/widgets/app_bar/app_bottom_nav_bar.dart';
 import 'package:cryplet/shared/widgets/app_bar/user_app_bar.dart';
 import 'package:cryplet/shared/widgets/app_text/app_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-part '../controller/wallet_screen_controller.dart';
+part 'controller/wallet_screen_controller.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
@@ -33,7 +36,9 @@ class WalletScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 children: [
-                  const UserBallanceCard(),
+                  UserBallanceCard(
+                    balance: ctrl.walletState.totalBalance.to2Decimal,
+                  ),
                   40.ph,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,25 +57,20 @@ class WalletScreen extends StatelessWidget {
                     ],
                   ),
                   20.ph,
-                  ...List.generate(
-                    5,
-                    (index) {
-                      Color color = Tools.generatePaleRandomColor();
-                      return CurrencyItem(
-                        color: color,
-                        cryproName: 'Bitcoin',
-                        cryproSymbol: 'BTC',
-                        cryproIcon: 'assets/images/bitcoin.png',
-                        numberOfCoin: 3,
-                        cryproChangeRate: 16500.0,
-                        isFavorite: index % 2 == 0,
-                        toggleFavorite: () {
-                          print('toggle favorite');
-                        },
-                        onPressed: () => ctrl.goToCurrencyDetails(1),
-                      );
-                    },
-                  ),
+                  ...ctrl.walletState.walletCrypto.map((e) {
+                    Color color = Tools.generatePaleRandomColor();
+                    return CurrencyItem(
+                      color: color,
+                      cryproName: e.name ?? '',
+                      cryproSymbol: e.symbol ?? '',
+                      cryproIcon: e.image ?? '',
+                      numberOfCoin: e.myBalance ?? 0,
+                      cryproChangeRate: 16500.0,
+                      isFavorite: e.isFavorite ?? false,
+                      toggleFavorite: () => ctrl.addCurrencyToFavorite(e),
+                      onPressed: () => ctrl.goToCurrencyDetails(e.id!),
+                    );
+                  })
                 ],
               ),
             ),

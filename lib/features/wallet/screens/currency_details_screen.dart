@@ -8,11 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
-class CurrencyDetailsScreen extends StatelessWidget {
+class CurrencyDetailsScreen extends StatefulWidget {
   const CurrencyDetailsScreen({super.key, required this.id});
 
-  final int id;
+  final String id;
 
+  @override
+  State<CurrencyDetailsScreen> createState() => _CurrencyDetailsScreenState();
+}
+
+class _CurrencyDetailsScreenState extends State<CurrencyDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

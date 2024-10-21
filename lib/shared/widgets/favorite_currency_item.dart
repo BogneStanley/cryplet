@@ -36,12 +36,10 @@ class FavoriteCurrencyItem extends StatelessWidget {
           smoothness: 1,
         ),
         child: Container(
-          padding: const EdgeInsets.all(15),
-          constraints: const BoxConstraints(
-            maxWidth: 200,
-          ),
+          padding:
+              const EdgeInsets.only(left: 15, top: 15, bottom: 15, right: 22),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -56,25 +54,21 @@ class FavoriteCurrencyItem extends StatelessWidget {
                     ),
                   ),
                   10.pw,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppTitle(cryproName).title3(),
-                        AppTitle(
-                          cryproSymbol,
-                          color: AppColors.grey,
-                        ).title5(),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppTitle(cryproName).title3(),
+                      AppTitle(
+                        cryproSymbol,
+                        color: AppColors.grey,
+                      ).title5(),
+                    ],
                   ),
                 ],
               ),
               15.ph,
               Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppTitle(
                     (amountIHave).toStringAsFixed(2),

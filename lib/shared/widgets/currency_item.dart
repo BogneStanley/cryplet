@@ -56,6 +56,7 @@ class CurrencyItem extends StatelessWidget {
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.error),
+                      width: 30,
                     ),
                   ),
                   10.pw,

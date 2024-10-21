@@ -9,7 +9,7 @@ class AppApiWrapper {
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
 
-    dio.interceptors.add(
+    dio.interceptors.addAll([
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           bool result = await InternetConnection().hasInternetAccess;
@@ -32,7 +32,8 @@ class AppApiWrapper {
           return handler.next(options);
         },
       ),
-    );
+      PrettyDioLogger(),
+    ]);
 
     return dio;
   }

@@ -3,32 +3,35 @@ part of '../dio_init.dart';
 class CryptoApiWrapper {
   Dio getAppDio() {
     final dio = Dio();
-    dio.options.baseUrl = '${AppConfig.appBaseUrl}/api';
+    dio.options.baseUrl = AppConfig.cryptoBaseUrl;
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
 
-    dio.interceptors.add(
+    dio.interceptors.addAll([
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           bool result = await InternetConnection().hasInternetAccess;
           if (!result) {
-            throw DioException(
-              requestOptions: options,
-              response: Response(
+            return handler.reject(
+              DioException(
                 requestOptions: options,
-                statusCode: 503,
-                data: {'message': 'No internet connection!'},
+                response: Response(
+                  requestOptions: options,
+                  statusCode: 503,
+                  data: {'message': 'No internet connection!'},
+                ),
               ),
             );
           }
-          String? token = AppConfig.cryptoApiKey;
+          String token = AppConfig.cryptoApiKey;
           if (token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $token';
+            options.headers['x-cg-demo-api-key'] = token;
           }
           return handler.next(options);
         },
       ),
-    );
+      PrettyDioLogger(),
+    ]);
 
     return dio;
   }
