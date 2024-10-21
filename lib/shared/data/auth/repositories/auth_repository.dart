@@ -58,9 +58,10 @@ class AuthRepository {
     }
   }
 
-  ResultFuture<void> logout() async {
+  ResultSync<void> logout() {
     try {
-      _localAuthApi.clearApiToken();
+      clearApiToken();
+      clearUser();
       return const Right(null);
     } on ApiException catch (e) {
       return Left(APIFailure.fromException(e));
@@ -69,5 +70,32 @@ class AuthRepository {
 
   void saveApiToken(String token) async {
     _localAuthApi.setApiToken(token);
+  }
+
+  void clearApiToken() {
+    _localAuthApi.clearApiToken();
+  }
+
+  ResultSync<UserModel> getUser() {
+    try {
+      final user = _localAuthApi.getUser();
+
+      if (user == null) {
+        return const Left(
+          APIFailure(message: 'Failed to get user from local storage'),
+        );
+      }
+      return Right(user);
+    } on ApiException catch (e) {
+      return Left(APIFailure.fromException(e));
+    }
+  }
+
+  void saveUser(UserModel user) {
+    _localAuthApi.saveUser(user);
+  }
+
+  void clearUser() {
+    _localAuthApi.clearUser();
   }
 }

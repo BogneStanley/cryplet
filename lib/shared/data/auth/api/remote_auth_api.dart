@@ -32,7 +32,7 @@ class RemoteAuthApi {
   Future<UserModel> me(String id) async {
     try {
       final response = await _dio.get('/collections/users/records/$id');
-      return UserModel.fromJson(response.data);
+      return UserModel.fromMap(response.data);
     } on DioException catch (e) {
       throw ApiException(e.response?.data['message'] ?? e.message);
     } catch (e) {
@@ -52,7 +52,7 @@ class RemoteAuthApi {
               'avatar': await MultipartFile.fromFile(registerReq.avatar!),
           }));
 
-      return UserModel.fromJson(response.data);
+      return UserModel.fromMap(response.data);
     } on DioException catch (e) {
       print(e.response);
       throw ApiException(e.response?.data['message'] ?? e.message);

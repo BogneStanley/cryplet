@@ -26,6 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
           errorMessage: null,
         ));
 
+        _authRepository.saveUser(r.user!);
         _authRepository.saveApiToken(r.token!);
       },
     );
@@ -76,5 +77,26 @@ class AuthCubit extends Cubit<AuthState> {
       loginInProgess: false,
       errorMessage: null,
     ));
+  }
+
+  Future<String?> me(String id) async {
+    emit(state.copyWith(gettingUserInProgess: true));
+    final user = await _authRepository.me(id);
+
+    return user.fold((l) {
+      emit(state.copyWith(
+        gettingUserInProgess: false,
+        errorMessage: l.message,
+      ));
+      return l.message;
+    }, (r) {
+      emit(state.copyWith(
+        gettingUserInProgess: false,
+        user: r,
+        errorMessage: null,
+      ));
+      _authRepository.saveUser(r);
+      return null;
+    });
   }
 }

@@ -10,11 +10,13 @@ class AppTextField extends StatelessWidget {
     this.controller,
     this.validator,
     this.label,
+    this.textInputType,
   });
 
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final String? label;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           validator: validator,
           autovalidateMode: AutovalidateMode.onUnfocus,
-          keyboardType: TextInputType.number,
+          keyboardType: textInputType,
           decoration: InputDecoration(
             label: label == null
                 ? null
