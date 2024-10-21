@@ -21,8 +21,8 @@ class AppBottomNavbar extends StatelessWidget {
             context, AppRoutes.walletRoutes.wallet, (route) => false);
         break;
       case 2:
-        // Navigator.pushNamedAndRemoveUntil(
-        //     context, AppRoutes.homeRoutes.home, (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.settingsRoutes.settings, (route) => false);
         break;
     }
   }
