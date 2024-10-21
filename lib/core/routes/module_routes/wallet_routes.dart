@@ -24,7 +24,7 @@ class _WalletRoutes extends ModuleRoutesContract {
       case _currencyDetails:
         return buildRoute(
           CurrencyDetailsScreen(
-            id: settings.arguments as int,
+            id: settings.arguments as String,
           ),
           guard: AuthGuard(),
         );
@@ -36,7 +36,7 @@ class _WalletRoutes extends ModuleRoutesContract {
       case _addCurrency:
         return buildRoute(
           AddCurrencyScreen(
-            id: settings.arguments as int,
+            id: settings.arguments as String,
           ),
           guard: AuthGuard(),
         );

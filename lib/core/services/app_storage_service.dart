@@ -1,3 +1,4 @@
+import 'package:cryplet/shared/data/auth/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AppStorageService {
@@ -33,5 +34,21 @@ class AppStorageService {
 
   static void removeToken() {
     remove(_remoteUserTokenKey);
+  }
+
+  static void saveUser(UserModel user) {
+    write('user', user.toJson());
+  }
+
+  static void clearUser() {
+    remove('user');
+  }
+
+  static UserModel? getUser() {
+    final json = read('user');
+    if (json == null) {
+      return null;
+    }
+    return UserModel.fromJson(json);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class UserModel {
   final String? id;
   final String? collectionId;
@@ -52,7 +54,7 @@ class UserModel {
         avatar: avatar ?? this.avatar,
       );
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         collectionId: json['collectionId'],
         collectionName: json['collectionName'],
@@ -68,7 +70,7 @@ class UserModel {
         avatar: json['avatar'],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         'id': id,
         'collectionId': collectionId,
         'collectionName': collectionName,
@@ -81,4 +83,9 @@ class UserModel {
         'name': name,
         'avatar': avatar,
       };
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
 }

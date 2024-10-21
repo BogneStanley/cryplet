@@ -1,5 +1,13 @@
 import 'package:cryplet/core/routes/app_routes.dart';
+import 'package:cryplet/core/services/app_storage_service.dart';
+import 'package:cryplet/core/services/dependancies_injection_container.dart';
+import 'package:cryplet/shared/constants/app_colors.dart';
 import 'package:cryplet/shared/constants/app_config.dart';
+import 'package:cryplet/shared/data/auth/models/user_model.dart';
+import 'package:cryplet/shared/data/auth/repositories/auth_repository.dart';
+import 'package:cryplet/shared/states/auth/auth_cubit.dart';
+import 'package:cryplet/shared/widgets/app_buttons/app_icon_button.dart';
+import 'package:cryplet/shared/widgets/app_text/app_title.dart';
 import 'package:flutter/material.dart';
 
 part 'splash_screen_controller.dart';
@@ -11,12 +19,28 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var ctrl = _SplashScreenController(context);
     return Scaffold(
-      body: Center(
-        child: FilledButton(
-          onPressed: ctrl.goToLoginScreen,
-          child: const Text('Login'),
-        ),
-      ),
+      body: FutureBuilder(
+          future: ctrl.init(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AppTitle(snapshot.error.toString(), color: AppColors.grey)
+                      .title1(),
+                  Center(
+                    child: AppIconButton(
+                      icon: const Icon(Icons.refresh, color: AppColors.primary),
+                      onPressed: ctrl.init,
+                      label: 'Retry',
+                    ),
+                  ),
+                ],
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

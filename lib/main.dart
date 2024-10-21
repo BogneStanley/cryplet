@@ -1,9 +1,11 @@
 import 'package:cryplet/core/routes/app_routes.dart';
 import 'package:cryplet/core/services/app_storage_service.dart';
 import 'package:cryplet/core/services/dependancies_injection_container.dart';
+import 'package:cryplet/features/wallet/screens/state/get_currencies_list_cubit/get_currencies_list_cubit.dart';
 import 'package:cryplet/shared/constants/app_colors.dart';
 import 'package:cryplet/shared/constants/app_config.dart';
 import 'package:cryplet/shared/states/auth/auth_cubit.dart';
+import 'package:cryplet/shared/states/wallet/wallet_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,6 +27,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<AuthCubit>(),
         ),
+        BlocProvider(
+          create: (context) => sl<WalletCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<GetCurrenciesListCubit>(),
+        ),
       ],
       child: Builder(
         builder: (context) {
@@ -34,7 +42,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
               textTheme: GoogleFonts.poppinsTextTheme(),
-              appBarTheme: AppBarTheme(
+              appBarTheme: const AppBarTheme(
                 backgroundColor: AppColors.white,
               ),
               useMaterial3: true,
