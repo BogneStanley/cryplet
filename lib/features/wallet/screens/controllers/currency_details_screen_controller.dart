@@ -93,6 +93,7 @@ class _CurrencyDetailsScreenController extends ScreenControllerContract {
 
     if (res != null) {
       history = res;
+      updateCurrencyCurrentPrice(history.last.price);
     }
 
     dataIsLoading = false;
@@ -110,6 +111,16 @@ class _CurrencyDetailsScreenController extends ScreenControllerContract {
 
     var res = await walletCubit.updateCrypto(crypto);
 
+    if (res) {
+      updateUi();
+    }
+  }
+
+  updateCurrencyCurrentPrice(double price) async {
+    final crypto = currency.copyWith(
+      currentPrice: price,
+    );
+    final res = await walletCubit.updateCrypto(crypto);
     if (res) {
       updateUi();
     }
