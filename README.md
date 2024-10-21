@@ -1,16 +1,26 @@
 # cryplet
 
-A new Flutter project.
+Application pour gérer son wallet crypto
 
-## Getting Started
+# Instructions pour développeur
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+- Changer **.env.example** en **.env**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Définir les variables demandées dans votre **.env**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+NB: L'application utilise **Pockectbase** et **Coingecko**
+
+### Configuration Pocketbase
+
+Dans le fichier **.env** definir les variables suivantes :
+
+- APP_BASE_URL="https://your-pockectbase-instance.url"
+
+
+### Configuration Coingecko
+
+Dans le fichier **.env** definir les variables suivantes
+
+- CRYPTO_API_KEY="your-coingecke-api-key"
+- CRYPTO_API_URL= "https://api.coingecko.com/api/v3"
